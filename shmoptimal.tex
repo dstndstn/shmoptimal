@@ -1,0 +1,98 @@
+\documentclass[12pt, preprint]{aastex}
+\usepackage{hyperref}
+\usepackage{color}
+\newcommand{\niceurl}[1]{\href{#1}{\textsl{#1}}}
+
+\begin{document}
+
+\title{A Field Guide to the Word ``Optimal'' in Astronomy}
+
+\author{%
+Dustin Lang\altaffilmark{1,2}%
+}
+\altaffiltext{1}{%
+  Dunlap Institute and Department of Astronomy \& Astrophysics,
+  University of Toronto,
+  50 Saint George Street, Toronto, ON, M5S 3H4, Canada
+}
+\altaffiltext{2}{%
+  Department of Physics \& Astronomy,
+  University of Waterloo,
+  200 University Avenue West, Waterloo, ON, N2L 3G1, Canada
+}
+\date{April 1, 2016}
+
+\begin{abstract}
+The word ``optimal'' is used widely in astronomy, but its semantics
+may be unfamiliar to researchers from other fields.  Here we give
+our interpretations of various ways the word is used in the literature.
+\end{abstract}
+
+\keywords{%
+April 1; Optimality; Meta}
+
+\section{Introduction}
+
+Before exploring the use of the word in the astronomical literature, let
+us present definitions that might be recognizable to researchers from other
+disciplines.
+
+\begin{description}
+\item[Optimal (of a parameter):] achieving the maximum of a
+  well-specified scalar objective function.  That is, a parameter
+  $\hat{\theta}$ can be said to be \emph{optimal} in $f$ if and only
+  if
+  \[
+  \hat{\theta} = \arg\max_{\theta} f(\theta)
+  \]
+\item[Optimal (of a method, algorithm, or procedure):] achieving the
+  best possible value of a specified scalar performance metric among a
+  specified group of algorithms.
+  %
+  % For example,  ... Cramer--Rao
+  %
+\item[Optimize:] the act of discovering an optimal value through analytic or
+  numerical means.
+\end{description}
+
+\section{``Optimal'' in Astronomy}
+
+A variety of uses of the word ``optimal'' can be found in astronomy.
+Here we show a number of examples with our interpretations (XXX
+translations?) of their semantics.
+%
+% Specific references to the literature have been suppressed to
+% prevent embarassment, [but the authors of this article are coauthors
+% on each quoted work].
+
+
+\paragraph{``We present an optimal algorithm.''}
+Translation: the authors present a good algorithm.  And by good, they
+mean that they like it.  They like it because they wrote it, and it
+even seemed to work better on the \emph{two} different test images
+that they ran it on.  At least, it looked better to then.  They plan
+to make the code public in the near future.
+
+
+% We present a good algorithm.
+% And by good, we mean that we like it.  We like it because we wrote it,
+% and it even seems to work better on \emph{two} different test images
+% that we ran it on.  At least, it looked better to us.  We plan to make
+% the code public in the near future.
+
+\paragraph{``\emph{A} is more optimal than \emph{B}.''}
+Translation: Neither \emph{A} nor \emph{B} is any good.  The phrase
+``more optimal'' of course indicates that the writer has never climbed
+to the top of a hill and has not in any way quantitatively evaluated
+\emph{A} versus \emph{B}.  Further, if \emph{A} were truly optimal, it
+would be fruitless to search for a superior \emph{B}; the fact that
+the claim is being made probably means that \emph{A} has not been
+shown to be optimal.
+
+
+
+
+\section{Conclusions}
+
+
+\end{document}
