@@ -38,13 +38,25 @@ Use of the word ``optimal'' in the abstracts of papers posted to the
 arXiv pre-print service has been increasing for the last 15 years, as
 shown in Figure 1.  We used the arXiv API to query articles in the
 ``astro-ph'' category containing the term ``optimal'' in the abstract.
-The total number of articles per year were compiled from the summary
-statistics pages on the arXiv web site.
+A total of 3159 articles with publication dates earlier than 2016
+April 1 were returned.  The total number of articles per year was
+compiled from the summary statistics pages on the arXiv web site.\footnote{%
+  The query, data files, and the script used to generate Figure 1 are included
+  alongside the source of this paper, at \niceurl{https://github.com/dstndstn/shmoptimal}.}
+Since use of the word ``optimal'' in the astronomical literature continues
+to grow, and since interdisciplinary research has become more popular,
+it becomes more important for astronomers and researchers from other fields
+to share both vocabulary but also semantics.
 
 \begin{figure}[ht!]
-\includegraphics[width=0.8\textwidth]{yearly.pdf}
-\caption{Growth of the word ``optimal'' in the abstracts of arXiv astro-ph
-  preprints.}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{yearly.pdf}
+  \end{center}
+  \caption{Growth of the word ``optimal'' in the abstracts of arXiv
+    astro-ph preprints.  The error bars are based simply on the square
+    root of the number of appearances of the word ``optimal'' per
+    year, that is, assuming Poisson statistics.  Notice that the error
+    bar for 2016 is larger because we only have data before April 1.}
 \end{figure}
 
 
@@ -66,15 +78,15 @@ disciplines.
   %
   % For example,  ... Cramer--Rao
   %
-\item[Optimize:] the act of discovering an optimal value through analytic or
-  numerical means.
+  %\item[Optimize:] the act of discovering an optimal value through analytic or
+  %  numerical means.
 \end{description}
 
 \section{``Optimal'' in Astronomy}
 
 A variety of uses of the word ``optimal'' can be found in astronomy.
-Here we show a number of examples with our interpretations (XXX
-translations?) of their semantics.
+Here we show a number of examples with our interpretations of their
+semantics.
 %
 Specific references to the literature have been suppressed, but in the
 name of fairness, these examples are all drawn from documents
@@ -96,13 +108,12 @@ to make the code public in the near future.
 % the code public in the near future.
 
 \paragraph{``\emph{A} is more optimal than \emph{B}.''}
-Neither \emph{A} nor \emph{B} is any good.  The phrase
-``more optimal'' of course indicates that the writer has never climbed
-to the top of a hill and has not in any way quantitatively evaluated
-\emph{A} versus \emph{B}.  Further, if \emph{A} were truly optimal, it
-would be fruitless to search for a superior \emph{B}; the fact that
-the claim is being made probably means that \emph{A} has not been
-shown to be optimal.
+Neither \emph{A} nor \emph{B} is any good.  The phrase ``more
+optimal'' of course indicates that the writer has never climbed to the
+top of a hill and has not in any way quantitatively evaluated \emph{A}
+versus \emph{B}.  Interestingly, this also hints that \emph{B} has not
+been shown to be optimal, because if it had been, it would be
+obviously fruitless to search for a superior \emph{A}.
 
 \paragraph{``It is not clear that this method is optimal.''}
 The method is horrible, but it was written by the author's supervisor
@@ -123,11 +134,11 @@ The authors have no idea what they are going to do.
 Even the authors know the method is not optimal, but they just can't bring
 themselves to write ``good'' instead.
 
-\paragraph{``We choose optimal parameters $\alpha=500$ and $\beta=7.42$''}
-The authors chose the number $500$ because it is a round number and
-the parameter $\alpha$ doesn't seem to do anything at all, and $7.42$
-because any other value of $\beta$ they try causes the code to
-segfault.
+\paragraph{``We chose optimal parameters $\alpha=1000$ and $\beta=7.42$
+  for our production run''} The authors chose the number $1000$ because
+it is a round number and the parameter $\alpha$ doesn't seem to do
+anything at all, and $7.42$ because any other value of $\beta$ they
+try causes the code to segfault.
 
 \paragraph{``Our survey strategy optimally maximizes \emph{A} and \emph{B} while minimizing \emph{C}.''}
 The survey strategy code was written in Perl by a grad student who
@@ -144,16 +155,17 @@ while maximizing \emph{C}.
 \paragraph{``This method could be further optimized.''}
 The authors have not optimized it yet and have no plans to do so.
 
-\paragraph{``We set the parameter to optimally trade off between \emph{A} and \emph{B}''}
-The authors set the parameter to halfway between what is best for
-\emph{A} and what is best for \emph{B}.
+% \paragraph{``We set the parameter to optimally trade off between \emph{A} and \emph{B}''}
+% The authors set the parameter to halfway between what is best for
+% \emph{A} and what is best for \emph{B}.
 
 \paragraph{``Our pilot survey aimed at an optimal selection of targets''}
 The authors tried really hard.
 
 \paragraph{``As shown in Lemma 4, the variance of our estimator saturates
 the Cram\'er--Rao bound''}
-This was written by the collaborator from the Statistics Department.
+This was written by the authors' collaborator from the Statistics Department
+and they are afraid to ask what it means.
 
 
 \section{Conclusions}

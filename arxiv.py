@@ -14,6 +14,7 @@ import pylab as plt
 from collections import Counter
 import datetime
 import time
+import os
 
 # wget "http://export.arxiv.org/api/query?search_query=abs:optimal+AND+cat:astro-ph&max_results=2000" -O 4
 #fn = '4'
@@ -44,7 +45,8 @@ monthnum = dict([(m, int(m[:4]) + (int(m[5:7],10) - 0.5)/12.) for m in months])
 
 yrs = [monthnum[m] for m in months]
 
-plt.subplots_adjust(right=0.95, top=0.95)
+plt.figure(figsize=(6,4))
+plt.subplots_adjust(left=0.1, bottom=0.15, right=0.98, top=0.98)
 
 # plt.clf()
 # plt.hist(yrs, 50)
