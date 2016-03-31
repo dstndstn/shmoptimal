@@ -41,12 +41,12 @@ shown in Figure 1.  We used the arXiv API to query articles in the
 A total of 3159 articles with publication dates earlier than 2016
 April 1 were returned.  The total number of articles per year was
 compiled from the summary statistics pages on the arXiv web site.\footnote{%
-  The query, data files, and the script used to generate Figure 1 are included
+  The query, data files, and the script used to generate the figures are included
   alongside the source of this paper, at \niceurl{https://github.com/dstndstn/shmoptimal}.}
 Since use of the word ``optimal'' in the astronomical literature continues
 to grow, and since interdisciplinary research has become more popular,
 it becomes more important for astronomers and researchers from other fields
-to share both vocabulary but also semantics.
+to share not only vocabulary but also semantics.
 
 \begin{figure}[ht!]
   \begin{center}
@@ -67,8 +67,8 @@ disciplines.
 \begin{description}
 \item[Optimal (of a parameter):] achieving the maximum of a
   well-specified scalar objective function.  That is, a parameter
-  $\hat{\theta}$ can be said to be \emph{optimal} in $f$ if and only
-  if
+  $\hat{\theta}$ can be said to be \emph{optimal} with respect to $f$
+  if and only if
   \[
   \hat{\theta} = \arg\max_{\theta} f(\theta)
   \]
@@ -78,20 +78,18 @@ disciplines.
   %
   % For example,  ... Cramer--Rao
   %
-  %\item[Optimize:] the act of discovering an optimal value through analytic or
-  %  numerical means.
 \end{description}
 
 \section{``Optimal'' in Astronomy}
 
-A variety of uses of the word ``optimal'' can be found in astronomy.
+A variety of uses of the word ``optimal'' can be found in the 
+astronomical literature.
 Here we show a number of examples with our interpretations of their
 semantics.
 %
 Specific references to the literature have been suppressed, but in the
-name of fairness, these examples are all drawn from documents
+name of fairness, these examples are paraphrased from documents
 coauthored by the authors of this guide.
-
 
 \paragraph{``We present an optimal algorithm.''}
 The authors present a good algorithm.  And by good, they
@@ -99,13 +97,6 @@ mean that they like it.  They like it because they wrote it, and it
 even seemed to work better on the \emph{two} different test images
 they ran it on.  At least, it looked better to them.  They plan
 to make the code public in the near future.
-
-
-% We present a good algorithm.
-% And by good, we mean that we like it.  We like it because we wrote it,
-% and it even seems to work better on \emph{two} different test images
-% that we ran it on.  At least, it looked better to us.  We plan to make
-% the code public in the near future.
 
 \paragraph{``\emph{A} is more optimal than \emph{B}.''}
 Neither \emph{A} nor \emph{B} is any good.  The phrase ``more
@@ -119,15 +110,10 @@ obviously fruitless to search for a superior \emph{A}.
 The method is horrible, but it was written by the author's supervisor
 so the author is afraid to criticize it.
 
-
 \paragraph{``Data set \emph{A} is nearly optimal for our science.''}
 The authors have access to data set \emph{A}.
 
-
 \paragraph{``Further simulation is required to optimize the survey design.''}
-%
-%The authors have no idea what they are doing
-%
 The authors have no idea what they are going to do.
 
 \paragraph{``This is an ``optimal'' method.''}
@@ -140,7 +126,7 @@ it is a round number and the parameter $\alpha$ doesn't seem to do
 anything at all, and $7.42$ because any other value of $\beta$ they
 try causes the code to segfault.
 
-\paragraph{``Our survey strategy optimally maximizes \emph{A} and \emph{B} while minimizing \emph{C}.''}
+\paragraph{``Our strategy optimally maximizes \emph{A} and \emph{B} while minimizing \emph{C}.''}
 The survey strategy code was written in Perl by a grad student who
 graduated a decade ago and now works for an insurance company.  Nobody
 else in the lab can even read the code, never mind modify it, and it
@@ -148,9 +134,6 @@ uses parameters for a different telescope than the one the survey will
 be carried out on.  Due to an elaborate series of bugs, it achieves
 median performance on \emph{A} and random performance on \emph{B},
 while maximizing \emph{C}.
-
-%Successive generations of graduate
-%students have carefully maintained the
 
 \paragraph{``This method could be further optimized.''}
 The authors have not optimized it yet and have no plans to do so.
