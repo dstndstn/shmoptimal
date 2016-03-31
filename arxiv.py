@@ -162,6 +162,8 @@ I = np.argsort(totalyrs)
 # zero 'optimals' before 1993
 I = I[totalyrs[I] > 1993]
 
+print('Total of', np.sum(totalN), 'articles')
+
 yrcount = Counter([int(m[:4],10) for m in months])
 
 noptimal = np.zeros_like(totalN)
