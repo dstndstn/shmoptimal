@@ -17,6 +17,10 @@ import time
 import os
 
 def retrieve_page(query, max_results, offset):
+    '''
+    Retrieves one page of the given query to the ArXiv API, with N per page
+    of *max_results*, starting from offset *offset*.  Returns the XML text.
+    '''
     url = 'http://export.arxiv.org/api/query?'
     params = dict(search_query=query,
                   max_results=max_results,
@@ -31,6 +35,13 @@ def retrieve_page(query, max_results, offset):
     return r.text
 
 def find_published_dates(xml):
+    '''
+    Parses the given XML string, searching for the tags giving the total
+    number of search results, and the publication dates.
+
+    Returns: (int *ntotal*, list of strings *dates*)
+    
+    '''
     # Parse query results   
     dom1 = minidom.parseString(xml)
     # How many total search results were found?
@@ -48,6 +59,18 @@ def find_published_dates(xml):
 
 def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
                    max_results = 5000):
+    '''
+    Counts how often the given *word* is used in arxiv papers.
+
+    *cat*: which arxiv category to search.
+    *where*: "abs" for the abstract
+           "ti" for the title
+    *cachefn*: filename to cache results in
+    *max_results*: number of results per page
+
+    Returns:
+    (list of strings *months* like "2016-03", list of integer years)
+    '''
     query='%s:%s+AND+cat:%s' % (where, word, cat)
     if cachefn is None or not os.path.exists(cachefn):
         txt = retrieve_page(query, max_results, 0)
@@ -57,6 +80,7 @@ def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
             f.write(txt)
             f.close()
     else:
+        print('Reading cached', cachefn)
         txt = open(cachefn).read()
 
     ntotal,dates = find_published_dates(txt)
@@ -67,6 +91,7 @@ def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
         if cachefn is not None:
             cfn = cachefn + '-page%i' % (page+1)
             if os.path.exists(cfn):
+                print('Reading cached', cfn)
                 txt = open(cfn).read()
         if txt is None:
             txt = retrieve_page(query, max_results, (page+1)*max_results)
@@ -87,20 +112,43 @@ def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
         years.append(int(d[:4]))
     return months,years
 
-if __name__ == '__main__':
-    sys.exit(main())
-
 def main():
-    #import optparse
-    
-    word = 'optimal'
-    #word = 'sdss'
-    cachefn = '%s-cache.txt' % word
-    wordmonths,wordyears = count_word_use(word, cachefn=cachefn,
-                                          max_results=1000)
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description='Use ArXiv API to count articles containing terms')
+    parser.add_argument('word', nargs=1, help='Word to search for')
+    parser.add_argument('--plot', default='yearly.png',
+                        help='Output filename for plot')
+    parser.add_argument(
+        '--cache', default=None,
+        help='Cache filename prefix, default WORD-cache.txt; "no" for no cache')
+    parser.add_argument('--perpage', default=1000,
+                        help='Number of results per page, default 1000')
+    parser.add_argument('--title', action='store_true', default=False,
+                        help='Search in title, not in abstract')
+    opt = parser.parse_args()
+    word = opt.word[0]
+
+    if opt.cache is None:
+        cachefn = '%s-cache.txt' % word
+    elif opt.cache == 'no':
+        cachefn = None
+    else:
+        cachefn = opt.cache
+
+    where = 'abs'
+    wherestring = 'abstract'
+    if opt.title:
+        where = 'ti'
+        wherestring = 'title'
+        
+    wordmonths,wordyears = count_word_use(word, cachefn=cachefn, where=where,
+                                          max_results=opt.perpage)
+    plotfn = opt.plot
 
     plt.figure(figsize=(6,4))
-    plt.subplots_adjust(left=0.1, bottom=0.15, right=0.98, top=0.98)
+    plt.subplots_adjust(left=0.1, bottom=0.11, right=0.98, top=0.92)
 
     # http://arxiv.org/year/astro-ph/92 ... etc
     # cat monthly | tr '|' ' ' | tr '!' ' ' | awk '{print $1, $2}'
@@ -178,9 +226,9 @@ def main():
 
     yrcount = Counter(wordyears)
 
-    noptimal = np.zeros_like(totalN)
+    nword = np.zeros_like(totalN)
     for i,k in enumerate(yearly_totals.keys()):
-        noptimal[i] = yrcount[k]
+        nword[i] = yrcount[k]
 
     # plt.clf()
     # plt.plot(totalyrs[I], totalN[I], 'b-')
@@ -188,42 +236,21 @@ def main():
     # plt.savefig('yearly.png')
 
     plt.clf()
-    plt.plot(totalyrs[I], 100. * noptimal[I] / totalN[I].astype(float), 'k.')
+    plt.plot(totalyrs[I], 100. * nword[I] / totalN[I].astype(float), 'k.')
     plt.xlabel('Year of publication')
     plt.ylabel("Articles containing ``%s'' (\%%)" % word)
-    yt = [0,1,2,3]
-    plt.yticks(yt, ['   %i' % t for t in yt])
+    #yt = [0,1,2,3]
+    #plt.yticks(yt, ['   %i' % t for t in yt])
 
-    plt.errorbar(totalyrs[I], 100. * noptimal[I] / totalN[I].astype(float), 
-                 yerr=100. * np.sqrt(noptimal[I]) / totalN[I].astype(float),
+    plt.errorbar(totalyrs[I], 100. * nword[I] / totalN[I].astype(float), 
+                 yerr=100. * np.sqrt(nword[I]) / totalN[I].astype(float),
                  fmt='none', ecolor='k')
-    plt.axis([1992, 2017, 0, 3])
-    plt.savefig('yearly.png')
-    plt.savefig('yearly.pdf')
+    plt.xlim(1992, 2017)
+    plt.title("Arxiv astro-ph %ss containing the term ``%s''" % (wherestring, word))
+    plt.savefig(plotfn)
 
-    print('Total years:', totalyrs[I])
-
-    # # http://export.arxiv.org/oai2?verb=ListIdentifiers&metadataPrefix=arXiv&from=2016-01-01&until=2016-01-31&set=physics:astro-ph
-# allmonths = range(1993*12, 2015*12)
-# allmonths = list(reversed(allmonths))
-# #for ym0,ym1 in zip(allmonths, allmonths[1:]):
-# imonth = 0
-# while imonth < len(allmonths)-1:
-#     ym0 = allmonths[imonth]
-#     ym1 = ym0 + 1
-#     #ym1 = allmonths[imonth+1]
-#     y0 = ym0 / 12
-#     m0 = ym0 % 12 + 1
-#     y1 = ym1 / 12
-#     m1 = ym1 % 12 + 1
-# 
-#     ymstring = '%i-%02i' % (y0, m0)
-#     if ymstring in cached:
-#         print('Cached:', ymstring, cached[ymstring])
-#         imonth += 1
-#         continue
-#     
-#     url = ('http://export.arxiv.org/oai2?verb=ListIdentifiers&metadataPrefix=arXiv&from=%i-%02i-01&until=%i-%02i-01&set=physics:astro-ph' %
+# I also tried the Open Archives version...
+# url = ('http://export.arxiv.org/oai2?verb=ListIdentifiers&metadataPrefix=arXiv&from=%i-%02i-01&until=%i-%02i-01&set=physics:astro-ph' %
 #            (y0,m0,y1,m1))
 #     print(url)
 #     
@@ -243,3 +270,9 @@ def main():
 #     print('"%i-%02i": %i,' % (y0, m0, len(headers)))
 #     time.sleep(3)
 #     imonth += 1
+
+
+if __name__ == '__main__':
+    import sys
+    sys.exit(main())
+
