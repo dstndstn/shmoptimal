@@ -127,6 +127,8 @@ def main():
                         help='Number of results per page, default 1000')
     parser.add_argument('--title', action='store_true', default=False,
                         help='Search in title, not in abstract')
+    parser.add_argument('--number', action='store_true', default=False,
+                        help='Plot raw number, not fraction')
     opt = parser.parse_args()
     word = opt.word[0]
 
@@ -150,6 +152,24 @@ def main():
     plt.figure(figsize=(6,4))
     plt.subplots_adjust(left=0.1, bottom=0.11, right=0.98, top=0.92)
 
+    if opt.number:
+        plt.clf()
+        yrcount = Counter(wordyears).most_common()
+        print('year count', yrcount)
+        years = [y for y,n in yrcount]
+        num = np.array([n for y,n in yrcount])
+        plt.plot(years, num, 'k.')
+        plt.xlabel('Year of publication')
+        plt.ylabel('Number of articles')
+        plt.errorbar(years, num,
+                     yerr = np.sqrt(num),
+                     fmt='none', ecolor='k')
+        plt.xlim(1992, 2017)
+        plt.title("Arxiv astro-ph %ss containing the term ``%s''" % (wherestring, word))
+        plt.savefig(plotfn)
+        return
+
+    
     # http://arxiv.org/year/astro-ph/92 ... etc
     # cat monthly | tr '|' ' ' | tr '!' ' ' | awk '{print $1, $2}'
     astroph_monthly_totals = {
