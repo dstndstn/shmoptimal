@@ -71,7 +71,11 @@ def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
     Returns:
     (list of strings *months* like "2016-03", list of integer years)
     '''
-    query='%s:%s+AND+cat:%s' % (where, word, cat)
+
+    words = word.split()
+    query = '+AND+'.join(['%s:%s' % (where,word) for word in words]) + '+AND+cat:%s' % (cat)
+
+    #query='%s:%s+AND+cat:%s' % (where, word, cat)
     if cachefn is None or not os.path.exists(cachefn):
         txt = retrieve_page(query, max_results, 0)
         if cachefn is not None:
