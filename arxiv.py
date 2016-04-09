@@ -268,7 +268,7 @@ def main():
 
     plt.errorbar(totalyrs[I], 100. * nword[I] / totalN[I].astype(float), 
                  yerr=100. * np.sqrt(nword[I]) / totalN[I].astype(float),
-                 fmt='none', ecolor='k')
+                 fmt='None', ecolor='k')
     plt.xlim(1992, 2017)
     plt.title("Arxiv astro-ph %ss containing the term ``%s''" % (wherestring, word))
     plt.savefig(plotfn)
