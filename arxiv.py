@@ -90,7 +90,7 @@ def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
     ntotal,dates = find_published_dates(txt)
     
     # If total > max_results, retrieve additional pages...
-    for page in range(ntotal / max_results):
+    for page in range(ntotal // max_results):
         txt = None
         if cachefn is not None:
             cfn = cachefn + '-page%i' % (page+1)
@@ -100,7 +100,7 @@ def count_word_use(word, cat='astro-ph*', where='abs', cachefn=None,
         if txt is None:
             txt = retrieve_page(query, max_results, (page+1)*max_results)
             if cachefn is not None:
-                f = open(cfn, 'w')
+                f = open(cfn, 'wb')
                 txt = txt.encode('ascii', 'ignore')
                 f.write(txt)
                 f.close()
@@ -239,12 +239,12 @@ def main():
 
     yearly_totals = {}
     for k,v in astroph_monthly_totals.items():
-        yk = k / 100
+        yk = k // 100
         yearly_totals[yk] = yearly_totals.get(yk, 0) + v
     
 
-    totalyrs = np.array(yearly_totals.keys())
-    totalN = np.array(yearly_totals.values())
+    totalyrs = np.array(list(yearly_totals.keys()))
+    totalN = np.array(list(yearly_totals.values()))
     I = np.argsort(totalyrs)
     print('Total of', np.sum(totalN), 'articles')
 
@@ -256,8 +256,8 @@ def main():
 
     # plt.clf()
     # plt.plot(totalyrs[I], totalN[I], 'b-')
-    # plt.plot(totalyrs[I], noptimal[I], 'r-')
-    # plt.savefig('yearly.png')
+    # plt.plot(totalyrs[I], nword[I], 'r-')
+    # plt.savefig('yearly1.png')
 
     plt.clf()
     plt.plot(totalyrs[I], 100. * nword[I] / totalN[I].astype(float), 'k.')
