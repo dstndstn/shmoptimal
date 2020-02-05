@@ -133,6 +133,8 @@ def main():
                         help='Search in title, not in abstract')
     parser.add_argument('--number', action='store_true', default=False,
                         help='Plot raw number, not fraction')
+    parser.add_argument('--cat', help='Arxiv category: default "astro-ph*"',
+                        default=None)
     opt = parser.parse_args()
     word = opt.word[0]
 
@@ -148,9 +150,13 @@ def main():
     if opt.title:
         where = 'ti'
         wherestring = 'title'
-        
+
+    kwargs = {}
+    if opt.cat is not None:
+        kwargs.update(cat=opt.cat)
+
     wordmonths,wordyears = count_word_use(word, cachefn=cachefn, where=where,
-                                          max_results=opt.perpage)
+                                          max_results=opt.perpage, **kwargs)
     plotfn = opt.plot
 
     plt.figure(figsize=(6,4))
@@ -234,7 +240,16 @@ def main():
         201410: 1154, 201411: 967 , 201412: 1020, 201501: 1052, 201502: 1000,
         201503: 1093, 201504: 1067, 201505: 1037, 201506: 1025, 201507: 1080,
         201508: 954 , 201509: 1216, 201510: 1182, 201511: 1173, 201512: 1019,
-        201601: 1021, 201602: 989 , 201603: 1152,
+        201601: 1021, 201602: 989 , 201603: 1199, 201604: 1044, 201605: 1131, 
+        201606: 1040, 201607: 1092, 201608: 1105, 201609: 1214, 201610: 1164, 
+        201611: 1146, 201612: 1071, 201701: 1116, 201702: 928 , 201703: 1111, 
+        201704: 869 , 201705: 1147, 201706: 1128, 201707: 1035, 201708: 1061, 
+        201709: 1182, 201710: 1312, 201711: 1262, 201712: 1112, 201801: 1244, 
+        201802: 1030, 201803: 1081, 201804: 1134, 201805: 1279, 201806: 1094, 
+        201807: 1267, 201808: 1118, 201809: 1113, 201810: 1355, 201811: 1301, 
+        201812: 1065, 201901: 1125, 201902: 1038, 201903: 1475, 201904: 1258, 
+        201905: 1159, 201906: 1023, 201907: 1277, 201908: 1225, 201909: 1344, 
+        201910: 1295, 201911: 1100, 201912: 1100,
     }
 
     yearly_totals = {}
